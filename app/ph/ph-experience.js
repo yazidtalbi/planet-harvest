@@ -1,28 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './ph.module.css';
 
 const FRAME_COUNT = 120;
 const frameUrl = (index) => `/ph/frames-alpha/straw-${String(index + 1).padStart(3, '0')}.png`;
-const chapters = [
-  { label: 'A closer look', title: <>Nature.<br />Unfiltered.</>, note: 'There’s more to a berry\nthan meets the eye.', copy: 'Perfectly imperfect. Beautifully complex. Take a closer look at the little things that make nature extraordinary.', bottom: <>The real<br />good stuff.</>, side: <>A little<br />closer.</> },
-  { label: 'A little transformation', title: <>Good things<br />take time.</>, note: 'A little change.\nA whole new perspective.', copy: 'Nothing in nature stands still. Follow the transformation, and see something familiar in a completely different light.', bottom: <>Let nature<br />do its thing.</>, side: <>Every<br />little detail.</> },
-  { label: 'A fresh perspective', title: <>Fresh look.<br />Same nature.</>, note: 'Small berry.\nWonderful little world.', copy: 'From a different angle, a new appreciation. Here’s to slowing down, looking closer, and finding the extraordinary in the everyday.', bottom: <>Simply<br />extraordinary.</>, side: <>Rooted<br />in nature.</> },
-];
-
-function Botanical({ className }) {
-  return <svg className={className} viewBox="0 0 240 260" fill="currentColor" aria-hidden="true"><path d="M118 260C137 174 119 92 96 20l6-2c35 85 41 164 23 242z" /><path d="M111 82C39 100 17 53 8 22c53-7 91 9 103 60ZM126 123C167 66 213 69 237 79c-16 43-49 65-111 44ZM124 170C55 174 32 130 30 101c51 4 79 26 94 69ZM133 62C119 22 139 4 157 0c20 32 10 49-24 62ZM130 215C170 156 209 157 239 170c-22 39-57 56-109 45Z" /></svg>;
-}
 
 export default function PhExperience() {
   const rootRef = useRef(null);
   const canvasRef = useRef(null);
-  const progressRef = useRef(null);
-  const textRailRef = useRef(null);
-  const [chapter, setChapter] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuButton = useRef(null);
+  const heroBgRef = useRef(null);
+  const circleRef = useRef(null);
+  const headerRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -37,29 +26,71 @@ export default function PhExperience() {
     let target = 0;
     let drawn = -1;
     let raf = 0;
-    let currentChapter = -1;
+
+    // Preload frame 0 immediately so hero strawberry displays without delay
+    const firstImg = new Image();
+    firstImg.onload = () => {
+      if (disposed) return;
+      frames.set(0, firstImg);
+      schedule();
+    };
+    requested.add(0);
+    firstImg.src = frameUrl(0);
 
     function paint() {
       raf = 0;
       if (disposed) return;
-      const distance = root.offsetHeight - window.innerHeight;
-      const progress = Math.max(0, Math.min(1, -root.getBoundingClientRect().top / Math.max(1, distance)));
+
+      const scrollY = window.scrollY;
+      const animDistance = Math.max(1, window.innerHeight * 0.36);
+      const progress = Math.max(0, Math.min(1, scrollY / animDistance));
+
+      // Rich parallax effect on hero background video
+      if (heroBgRef.current) {
+        heroBgRef.current.style.transform = `translate3d(0, ${-scrollY * 0.38}px, 0)`;
+      }
+
+      // Growing white circle behind strawberry on scroll
+      if (circleRef.current) {
+        const circleScale = progress * 7;
+        const circleOpacity = Math.min(1, progress * 3.5);
+        circleRef.current.style.transform = `translate(-50%, -50%) scale(${circleScale})`;
+        circleRef.current.style.opacity = `${circleOpacity}`;
+      }
+
+      // Toggle header dark green color (#083D31) once circle begins growing
+      if (headerRef.current) {
+        if (progress > 0.04 || scrollY > 20) {
+          headerRef.current.classList.add(styles.headerScrolled);
+        } else {
+          headerRef.current.classList.remove(styles.headerScrolled);
+        }
+      }
+
       target = motion.matches ? 0 : Math.round(progress * (FRAME_COUNT - 1));
       root.style.setProperty('--ph-progress', progress);
-      // Dock the visible fruit (about 84% of the source height) above the next heading.
-      const shrink = Math.max(0, Math.min(1, (progress - 0.72) / 0.28));
+
+      // Reveal strawberry on initial scroll, then shrink and move down near "Unlocking the Value" section
+      const revealDistance = Math.max(1, window.innerHeight * 0.12);
+      const revealProgress = Math.max(0, Math.min(1, scrollY / revealDistance));
+      const revealEased = motion.matches ? (revealProgress > 0 ? 1 : 0) : revealProgress * revealProgress * (3 - 2 * revealProgress);
+
+      const shrink = Math.max(0, Math.min(1, (progress - 0.15) / 0.85));
       const eased = motion.matches ? (shrink === 1 ? 1 : 0) : shrink * shrink * (3 - 2 * shrink);
       const renderedHeight = Math.min(canvas.clientHeight, canvas.clientWidth * 810 / 1440);
-      const finalScale = Math.min(1, 100 / (renderedHeight * 0.84));
-      canvas.style.transform = `translateY(${(canvas.clientHeight / 2 - 70) * eased}px) scale(${1 + (finalScale - 1) * eased})`;
-      root.style.setProperty('--scene-opacity', 1 - eased);
-      progressRef.current.style.setProperty('--progress', progress);
-      textRailRef.current.style.setProperty('--text-progress', progress);
-      const nextChapter = Math.min(2, Math.floor(progress * 3));
-      if (nextChapter !== currentChapter) {
-        currentChapter = nextChapter;
-        setChapter(nextChapter);
-      }
+      const finalScale = Math.min(1, 120 / (renderedHeight * 0.84));
+
+      const revealScale = 0.75 + 0.25 * revealEased;
+      const revealTranslateY = (1 - revealEased) * 40;
+      const shrinkTranslateY = eased * Math.min(330, window.innerHeight * 0.35);
+
+      const totalScale = revealScale * (1 + (finalScale - 1) * eased);
+      const totalTranslateY = revealTranslateY + shrinkTranslateY;
+
+      canvas.style.transform = `translate3d(0, ${totalTranslateY}px, 0) scale(${totalScale})`;
+      canvas.style.opacity = `${revealEased}`;
+      root.style.setProperty('--scene-opacity', (1 - eased) * revealEased);
+
       let nearest = -1;
       for (const index of frames.keys()) {
         if (nearest === -1 || Math.abs(index - target) < Math.abs(nearest - target)) nearest = index;
@@ -77,7 +108,6 @@ export default function PhExperience() {
     }
 
     function loadNext() {
-      // Keep downloads bounded, prioritizing the user's current scroll position.
       while (!disposed && active < 4 && requested.size < (motion.matches ? 1 : FRAME_COUNT)) {
         let next = -1;
         for (let index = 0; index < FRAME_COUNT; index++) {
@@ -113,68 +143,64 @@ export default function PhExperience() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!menuOpen) return;
-    const close = (event) => {
-      if (event.key === 'Escape') { setMenuOpen(false); menuButton.current?.focus(); }
-    };
-    document.addEventListener('keydown', close);
-    return () => document.removeEventListener('keydown', close);
-  }, [menuOpen]);
-
-  function goToChapter(index) {
-    setMenuOpen(false);
-    const root = rootRef.current;
-    const top = window.scrollY + root.getBoundingClientRect().top;
-    window.scrollTo({ top: top + (root.offsetHeight - window.innerHeight) * [0, 0.5, 1][index], behavior: 'instant' });
-  }
-
   return (
     <div className={styles.page} ref={rootRef}>
+      {/* Floating navbar outside stage so overflow: hidden on stage never clips it */}
+      <header ref={headerRef} className={styles.header}>
+        <nav className={styles.navLeft}>
+          <a href="#our-story">About Us</a>
+          <a href="#whole-harvest">Sourcing</a>
+          <a href="#three-pillars">Products</a>
+        </nav>
+
+        <a className={styles.navLogo} href="/" aria-label="Planet Harvest home">
+          <img src="/logo/logo2.svg" alt="Planet Harvest" className={styles.navLogoImg} />
+        </a>
+
+        <nav className={styles.navRight}>
+          <a href="#food-boxes">Food Boxes</a>
+          <a href="#our-impact">Impact</a>
+          <a href="#our-story" className={styles.navCta}>
+            <span>Learn More</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        </nav>
+      </header>
+
       <div className={styles.stage}>
-        <h1 className={styles.openingStatement}>Reimagining How Food Moves<br />From Farms to Communities.</h1>
+        {/* video.mp4 full viewport background with parallax */}
+        <div className={styles.heroBgWrapper}>
+          <video
+            ref={heroBgRef}
+            src="/video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className={styles.heroBgImage}
+          />
+          <div className={styles.heroBgOverlay} />
+        </div>
+
+        {/* Growing white circle behind the strawberry */}
+        <div ref={circleRef} className={styles.growingCircle} />
+
+        {/* Rotating strawberry backdrop canvas */}
         <div className={styles.backdrop}>
-          <canvas ref={canvasRef} width="1440" height="810" className={styles.canvas} role="img" aria-label="A strawberry slowly transforms from weathered to fresh as you scroll." />
-        </div>
-        <Botanical className={styles.botanical} />
-        <header className={styles.header}>
-          <a className={styles.logo} href="/" aria-label="Planet Harvest home">ph<span>®</span></a>
-          <span className={styles.headerNote}>A fresh perspective on nature</span>
-          <button ref={menuButton} className={styles.menuButton} aria-expanded={menuOpen} aria-controls="ph-menu" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Close' : 'Menu'}<span>{menuOpen ? '−' : '+'}</span></button>
-          {menuOpen && <nav id="ph-menu" className={styles.menu} aria-label="Chapters">{chapters.map((item, index) => <button key={item.label} onClick={() => goToChapter(index)}><small>0{index + 1}</small>{item.label}<span>↗</span></button>)}</nav>}
-        </header>
-
-        <div className={styles.annotation}>
-          <svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M87 9C36 4 20 39 30 79m-12-9 12 11 9-16" stroke="currentColor" strokeWidth="1.4" /></svg>
-          <p>{chapters[0].note}</p>
-          <span>No two are the same.</span>
+          <canvas ref={canvasRef} width="1440" height="810" className={styles.canvas} role="img" aria-label="A strawberry slowly transforms as you scroll." />
         </div>
 
-        <div className={styles.textRail} ref={textRailRef}>
-          {chapters.map((item, index) => (
-            <section className={styles.textPanel} key={item.label} aria-label={item.label}>
-              {index > 0 && <div className={styles.headline}>
-                <span className={styles.eyebrow}>The everyday, reimagined</span>
-                <h1>{item.title}</h1>
-              </div>}
-              <div className={styles.story}>
-                <span className={styles.storyIndex}>0{index + 1} / A small wonder</span>
-                <p>{item.copy}</p>
-                <button className={styles.outlineButton} onClick={() => goToChapter(index === 2 ? 0 : index + 1)}>{index === 2 ? 'Take another look' : 'Explore the good'}<span>↗</span></button>
-              </div>
-              <div className={styles.bottomTitles} aria-hidden="true"><span>{item.bottom}</span><span>{item.side}</span></div>
-            </section>
-          ))}
-        </div>
-        <footer className={styles.footer}>
-          <span className={styles.footerLabel}><i /> Little things. Big wonder.</span>
-          <div className={styles.progressGroup}>
-            <span className={styles.scrollIcon}>↓</span><span>Scroll to discover</span>
-            <div className={styles.track} ref={progressRef}><span /></div><span>0{chapter + 1} — 03</span>
-          </div>
-          <span className={styles.edition}>Nature study — Nº 001</span>
-        </footer>
+        {/* Headline text above the strawberry in color #FEFFFF */}
+        <h1 className={styles.openingStatement}>Reimagining How food comes<br />from farm to communities</h1>
+
+        {/* Scroll to explore indicator in sans-serif font at bottom of hero */}
+        <div className={styles.scrollToExplore}>Scroll to explore</div>
       </div>
     </div>
   );
 }
+
+

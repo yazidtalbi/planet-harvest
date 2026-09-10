@@ -1,0 +1,554 @@
+@font-face {
+  font-family: 'Biblon ITC';
+  src: url('/ph/Biblon ITC Std Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+.page {
+  --green: #07503f;
+  --dark-green: #032f23;
+  --ink: #333c32;
+  --bg-yellow: #eef4d4;
+  background: #ffffff;
+  color: var(--green);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+.page h1, .page h2, .page h3 {
+  font-family: 'Biblon ITC', Georgia, serif;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: -.035em;
+}
+
+/* Header Navbar with Scroll Shrink & No Shadow when full width */
+.header {
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1340px, 90vw);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99999;
+  color: #083D31;
+  padding: 14px 32px;
+  border-radius: 9999px;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  box-shadow: none !important; /* NO SHADOW when full width at top */
+  transition: width .4s cubic-bezier(.16, 1, .3, 1), padding .4s cubic-bezier(.16, 1, .3, 1), background .35s ease, box-shadow .35s ease, backdrop-filter .35s ease, color .3s ease;
+}
+
+.headerScrolled {
+  top: 28px !important;
+  width: min(820px, 92vw) !important;
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-radius: 9999px !important;
+  padding: 15px 30px !important;
+  color: #083D31 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.navLeft, .navRight {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 32px);
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 600;
+  letter-spacing: .4px;
+}
+
+.headerScrolled .navLeft, .headerScrolled .navRight {
+  gap: clamp(12px, 1.6vw, 24px) !important;
+  font-size: clamp(12px, 1vw, 14.5px) !important;
+  font-weight: 600 !important;
+}
+
+.navLeft a, .navRight a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity .2s ease;
+  white-space: nowrap;
+}
+
+.navLeft a:hover, .navRight a:hover {
+  opacity: .75;
+}
+
+.navLogo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.navLogoImg {
+  height: clamp(24px, 2.2vw, 31px);
+  width: auto;
+  display: block;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(57%) saturate(1294%) hue-rotate(127deg) brightness(94%) contrast(97%);
+}
+
+.navCta {
+  background: #083D31;
+  color: #FEFFFF !important;
+  border: 1px solid #083D31;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: clamp(11px, 0.9vw, 13.5px);
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+  transition: all .3s ease;
+}
+
+.navCta svg {
+  transition: transform .2s ease;
+}
+
+.navCta:hover {
+  opacity: .9;
+  transform: translateY(-1px);
+}
+
+.navCta:hover svg {
+  transform: translateX(2.5px);
+}
+
+/* Hero Section */
+.hero {
+  padding: 120px 24px 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.heroCard {
+  width: min(1340px, 94vw);
+  background: var(--bg-yellow);
+  border-radius: 32px;
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 60px);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroTitle {
+  font-size: clamp(60px, 9vw, 150px);
+  line-height: 0.92;
+  text-align: center;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15em;
+  flex-wrap: wrap;
+}
+
+.inlineAppleSticker {
+  display: inline-block;
+  width: clamp(50px, 7vw, 110px);
+  height: auto;
+  vertical-align: middle;
+  transform: translateY(-5px) rotate(-8deg);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+.heroContent {
+  display: grid;
+  grid-template-columns: 140px 1fr 220px;
+  align-items: center;
+  gap: 30px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.leftBroccoliSticker {
+  width: 120px;
+  height: auto;
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.12));
+}
+
+.centerHeroWrapper {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 0.9;
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 0 auto;
+  box-shadow: 0 20px 45px rgba(7, 80, 63, 0.12);
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.heroSideText {
+  font-size: clamp(14px, 1.2vw, 17px);
+  line-height: 1.45;
+  color: #3d4a3c;
+  font-weight: 500;
+  max-width: 220px;
+}
+
+/* Mission Statement Section */
+.missionSection {
+  padding: 80px 24px 100px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.missionTitle {
+  font-size: clamp(28px, 3.5vw, 54px);
+  line-height: 1.05;
+  color: #000000 !important;
+  margin-bottom: 35px;
+}
+
+.missionText {
+  font-size: clamp(15px, 1.25vw, 19px);
+  line-height: 1.5;
+  color: #4a5749;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* Founders / Team Section with Overlapping Card Parallax & NO SHADOWS */
+.teamSection {
+  padding: 60px 24px 160px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.teamStackingContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.teamCard {
+  border-radius: 28px;
+  padding: clamp(30px, 4vw, 50px);
+  position: relative;
+  will-change: transform;
+  transition: transform 0.08s linear;
+  box-shadow: none !important; /* REMOVED ALL SHADOWS */
+}
+
+/* Melissa Card (Colors: #363A44 - #738FDB - #363A44, NO SHADOW) */
+.melissaCard {
+  background: #eef5ff;
+  position: sticky;
+  top: 140px;
+  z-index: 1;
+  transform: translate3d(0, var(--card-shift, 0px), 0);
+  box-shadow: none !important; /* REMOVED SHADOW */
+}
+
+.melissaCard .cardName {
+  color: #363A44 !important;
+}
+
+.melissaCard .cardRole {
+  color: #738FDB !important;
+}
+
+.melissaCard .cardBio {
+  color: #363A44 !important;
+}
+
+/* Ivanka Card (Colors: #44363B - #F152A4 - #5A414E, NO SHADOW, OVERLAPS CARD 1 ON SCROLL) */
+.ivankaCard {
+  background: #fceefa;
+  position: relative;
+  z-index: 5;
+  margin-top: 100px;
+  margin-left: -50px;
+  transform: translate3d(0, var(--card-shift, 0px), 0);
+  box-shadow: none !important; /* REMOVED SHADOW */
+}
+
+.ivankaCard .cardName {
+  color: #44363B !important;
+}
+
+.ivankaCard .cardRole {
+  color: #F152A4 !important;
+}
+
+.ivankaCard .cardBio {
+  color: #5A414E !important;
+}
+
+.avatarWrapper {
+  width: clamp(70px, 7vw, 100px);
+  height: clamp(70px, 7vw, 100px);
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 3px solid #FEFFFF;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardName {
+  font-size: clamp(24px, 2.5vw, 36px);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+
+.cardRole {
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.cardBio {
+  font-size: clamp(13.5px, 1.1vw, 16px);
+  line-height: 1.5;
+}
+
+.floatingStrawberrySticker {
+  position: absolute;
+  top: 40px;
+  right: 48%;
+  z-index: 10;
+  width: clamp(65px, 6vw, 95px);
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+  transform: rotate(15deg);
+  pointer-events: none;
+}
+
+/* Leadership Photo Section */
+.leadershipSection {
+  padding: 60px 24px 140px;
+  text-align: center;
+  position: relative;
+}
+
+.leadershipTitle {
+  font-size: clamp(70px, 14vw, 220px);
+  line-height: 0.9;
+  margin-bottom: 30px;
+  color: var(--green);
+}
+
+.appleMaskWrapper {
+  width: min(520px, 85vw);
+  aspect-ratio: 1;
+  margin: -60px auto 0;
+  position: relative;
+  z-index: 2;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(7, 80, 63, 0.18);
+  border: 6px solid #FEFFFF;
+}
+
+.appleMaskImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Callout & Footer overrides */
+.callout {
+  position: relative;
+  background: #a9c76b url('/9.png') center/cover no-repeat;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 40px;
+  padding: 80px 24px;
+  border-radius: 26px;
+  overflow: hidden;
+  margin: 0 4% 90px;
+  color: #062d20;
+}
+
+.callout h2 {
+  font-size: clamp(30px, 3.8vw, 54px);
+  line-height: 1.05;
+  max-width: 780px;
+}
+
+.button {
+  background: #062d20;
+  color: white;
+  padding: 13px 35px;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  opacity: .9;
+  transform: translateY(-2px);
+}
+
+.siteFooter {
+  padding: 85px 4% 30px;
+  background: #032f23;
+  color: #f7f6ed;
+  position: relative;
+  overflow: hidden;
+  border-radius: 32px 32px 0 0;
+}
+
+.footerStickerTopRight {
+  position: absolute;
+  top: 35px;
+  right: 5%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.footerSticker {
+  width: clamp(100px, 11vw, 160px);
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.35));
+  transform: rotate(10deg);
+}
+
+.footerNav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 30px;
+  justify-content: center;
+}
+
+.footerNav > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.footerNav > div > span {
+  font-size: 11px;
+  color: #abbcaf;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.footerNav a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity .2s ease;
+}
+
+.footerNav a:hover {
+  opacity: .65;
+}
+
+.footerButton {
+  background: #f7f6ed;
+  color: #032f23;
+  padding: 8px 20px;
+  margin-top: 5px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footerLogoLink {
+  display: block;
+  width: 100%;
+  max-width: 1150px;
+  margin: 70px auto 60px;
+  text-align: center;
+}
+
+.footerLogoSvg {
+  width: 90%;
+  max-width: 1150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-top: 1px solid #ffffff25;
+  padding-top: 30px;
+  font-size: 11px;
+  color: #b5c4b7;
+}
+
+.footerBottom a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .leftBroccoliSticker {
+    display: none;
+  }
+  .heroSideText {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+  .teamStackingContainer {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .melissaCard {
+    position: relative;
+    top: auto;
+  }
+  .ivankaCard {
+    margin-top: -30px;
+    margin-left: 0;
+  }
+  .floatingStrawberrySticker {
+    top: -20px;
+    right: 20px;
+  }
+}
