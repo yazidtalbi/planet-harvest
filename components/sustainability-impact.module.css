@@ -85,7 +85,7 @@
 }
 
 .statNumber {
-  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Biblon ITC', var(--font-serif), Georgia, serif;
   font-size: clamp(32px, 3.8vw, 56px);
   font-weight: 700;
   line-height: 1;
