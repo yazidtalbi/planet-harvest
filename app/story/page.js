@@ -35,7 +35,7 @@ export default function StoryPage() {
       <Hero eyebrow="Rooted in purpose" title="Our Story." film="story" copy="A solution to maximize whole harvest sourcing, creating a market that turns waste into opportunity."><Button href="/contact">Grow with us</Button></Hero>
 
       {/* Mission Statement Section */}
-      <Intro eyebrow="Our foundation" title="Rooted in experience.">
+      <Intro className={styles.storyIntro} eyebrow="Our foundation" title="Rooted in experience.">
         <p>Our team is made up of seasoned leaders who have spent decades immersed in every facet of the food industry, from procurement and perishables, marketing to operations and strategic partnerships.</p>
         <p>Together, we’ve led national food relief efforts, fueled category growth for farmers and retailers, and built supply chain programs that stand up to the toughest conditions.</p>
         <p>This experience forms the foundation of how we operate today: as problem-solvers, connectors, and market makers for fresh produce across all grades, from premium to perfectly imperfect.</p>

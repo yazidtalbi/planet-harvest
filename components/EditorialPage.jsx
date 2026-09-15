@@ -20,8 +20,8 @@ export function Button({ href = '/contact', children = 'Let’s build a partners
 export function Hero(props) {
   return <><VideoHero {...props} /><HarvestMarquee /></>;
 }
-export function Intro({ eyebrow, title, children }) {
-  return <section className={styles.intro}><span className={styles.eyebrow}>{eyebrow}</span><h2>{title}</h2><div className={styles.introCopy}>{children}</div></section>;
+export function Intro({ eyebrow, title, children, className = '' }) {
+  return <section className={`${styles.intro} ${className}`}><span className={styles.eyebrow}>{eyebrow}</span><h2>{title}</h2><div className={styles.introCopy}>{children}</div></section>;
 }
 export function Split({ title, image, alt, children, reverse = false, eyebrow }) {
   return <section className={`${styles.split} ${reverse ? styles.reverse : ''}`}><div className={styles.splitImage}><img src={image} alt={alt} loading="lazy" /></div><div className={styles.splitCopy}>{eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}<h2>{title}</h2>{children}</div></section>;

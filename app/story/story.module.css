@@ -25,6 +25,10 @@
   letter-spacing: -.035em;
 }
 
+.storyIntro {
+  padding-bottom: clamp(16px, 2vw, 28px);
+}
+
 /* Header Navbar with Scroll Shrink & No Shadow when full width */
 .header {
   position: fixed;
