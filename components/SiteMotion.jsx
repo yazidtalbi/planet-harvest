@@ -64,6 +64,7 @@ export default function SiteMotion({ children }) {
 
       const anchor = event.target.closest('a[href]');
       if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
+      if (anchor.hasAttribute('data-tractor-transition')) return;
 
       const destination = new URL(anchor.href, window.location.href);
       if (destination.origin !== window.location.origin) return;

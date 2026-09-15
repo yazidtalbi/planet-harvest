@@ -11,7 +11,6 @@ export default function PhExperience() {
   const canvasRef = useRef(null);
   const heroBgRef = useRef(null);
   const circleRef = useRef(null);
-  const headerRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -56,15 +55,6 @@ export default function PhExperience() {
         const circleOpacity = Math.min(1, progress * 3.5);
         circleRef.current.style.transform = `translate(-50%, -50%) scale(${circleScale})`;
         circleRef.current.style.opacity = `${circleOpacity}`;
-      }
-
-      // Toggle header dark green color (#083D31) once circle begins growing
-      if (headerRef.current) {
-        if (progress > 0.04 || scrollY > 20) {
-          headerRef.current.classList.add(styles.headerScrolled);
-        } else {
-          headerRef.current.classList.remove(styles.headerScrolled);
-        }
       }
 
       target = motion.matches ? 0 : Math.round(progress * (FRAME_COUNT - 1));
@@ -145,31 +135,6 @@ export default function PhExperience() {
 
   return (
     <div className={styles.page} ref={rootRef}>
-      {/* Floating navbar outside stage so overflow: hidden on stage never clips it */}
-      <header ref={headerRef} className={styles.header}>
-        <nav className={styles.navLeft}>
-          <a href="#our-story">About Us</a>
-          <a href="#whole-harvest">Sourcing</a>
-          <a href="#three-pillars">Products</a>
-        </nav>
-
-        <a className={styles.navLogo} href="/" aria-label="Planet Harvest home">
-          <img src="/logo/logo2.svg" alt="Planet Harvest" className={styles.navLogoImg} />
-        </a>
-
-        <nav className={styles.navRight}>
-          <a href="#food-boxes">Food Boxes</a>
-          <a href="#our-impact">Impact</a>
-          <a href="#our-story" className={styles.navCta}>
-            <span>Learn More</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </a>
-        </nav>
-      </header>
-
       <div className={styles.stage}>
         {/* video.mp4 full viewport background with parallax */}
         <div className={styles.heroBgWrapper}>
@@ -194,7 +159,7 @@ export default function PhExperience() {
         </div>
 
         {/* Headline text above the strawberry in color #FEFFFF */}
-        <h1 className={styles.openingStatement}>Reimagining How food comes<br />from farm to communities</h1>
+        <h1 className={styles.openingStatement}>Reimagining How Food Moves<br />From Farms to Communities</h1>
 
         {/* Scroll to explore indicator in sans-serif font at bottom of hero */}
         <div className={styles.scrollToExplore}>Scroll to explore</div>

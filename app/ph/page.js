@@ -1,4 +1,4 @@
-import PhExperience from './ph-experience';
+import { Hero } from '@/components/EditorialPage';
 import HarvestSections from './harvest-sections';
 
 export const metadata = {
@@ -29,5 +29,5 @@ export const metadata = {
 };
 
 export default function PhPage() {
-  return <main><PhExperience /><HarvestSections /></main>;
+  return <main id="main-content"><Hero title="Reimagining How Food Moves From Farms to Communities." film="fields" videoSrc="/video.mp4" /><HarvestSections /></main>;
 }

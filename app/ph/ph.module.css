@@ -51,7 +51,7 @@
   transform: translateX(-50%);
   z-index: 5;
   color: #FEFFFF;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans), 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(12px, 0.95vw, 14px);
   font-weight: 500;
   letter-spacing: normal;

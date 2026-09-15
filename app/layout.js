@@ -1,5 +1,7 @@
 import localFont from 'next/font/local';
 import './globals.css';
+import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 const garamond = localFont({
   src: [
@@ -41,6 +43,7 @@ const helveticaNeue = localFont({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://planetharvest.com'),
   title: 'Planet Harvest — From Farms to Communities',
   description: 'Reimagining how food moves from farms to communities. Unlocking the value of every whole harvest.',
   openGraph: {
@@ -71,7 +74,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${garamond.variable} ${helveticaNeue.variable}`}>
       <body>
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

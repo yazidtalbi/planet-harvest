@@ -1,0 +1,10 @@
+.marquee { position: relative; width: 100%; overflow: hidden; background: #f4df66; color: #143e2c; padding: 20px 0 23px; }
+.track { display: flex; width: max-content; animation: harvest-travel 35s linear infinite; }
+.group { display: flex; flex-shrink: 0; align-items: center; }
+.item { display: flex; align-items: center; gap: 40px; padding-right: 40px; white-space: nowrap; font: 700 clamp(25px, 3.1vw, 48px)/1 'Biblon ITC', Georgia, serif; letter-spacing: -.035em; }
+.fruitIcon { width: clamp(20px, 2.2vw, 32px); height: auto; flex-shrink: 0; color: #143e2c; opacity: 0.9; }
+.marquee button { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; color: #143e2c; background: #f4df66; border: 1px solid #143e2c50; box-shadow: 0 0 15px 10px #f4df66; }
+.paused .track, .marquee:hover .track, .marquee:focus-within .track { animation-play-state: paused; }
+@keyframes harvest-travel { to { transform: translateX(-50%); } }
+@media(max-width:600px) { .marquee { padding: 18px 0; } .item { gap: 28px; padding-right: 28px; } .diamond { font-size: 17px; } }
+@media(prefers-reduced-motion:reduce) { .track { animation: none; width: 100%; } .group { flex-wrap: wrap; justify-content: center; gap: 16px 0; } .group:nth-child(2), .marquee button { display: none; } .item { font-size: 19px; gap: 16px; padding-right: 16px; } }

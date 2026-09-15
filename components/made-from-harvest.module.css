@@ -1,0 +1,125 @@
+.statisticsSection {
+  background: #f4df66;
+  color: #07503f;
+  border-radius: 24px;
+  padding: clamp(55px, 7vw, 100px) clamp(24px, 5vw, 64px);
+  text-align: center;
+  max-width: 1240px;
+  margin: 0 auto clamp(32px, 4vw, 56px);
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  max-width: 800px;
+  margin: 0 auto clamp(45px, 6vw, 75px);
+}
+
+.eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 12px;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 600;
+  color: #07503f;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: 'Biblon ITC', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(38px, 5vw, 72px);
+  line-height: 1.02;
+  color: #07503f;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  align-items: stretch;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 clamp(16px, 3vw, 40px);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.iconImage {
+  max-height: 130px;
+  max-width: 100%;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.12));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.column:hover .iconImage {
+  transform: translateY(-6px) scale(1.04);
+}
+
+.statNumber {
+  font-family: 'Biblon ITC', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(52px, 6.5vw, 98px);
+  line-height: 0.95;
+  color: #07503f;
+  letter-spacing: -0.035em;
+  margin-bottom: 16px;
+}
+
+.statLabel {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(14px, 1.25vw, 18px);
+  color: #1a4234;
+  line-height: 1.4;
+  max-width: 250px;
+  margin: 0 auto;
+  font-weight: 500;
+}
+
+.divider {
+  background: rgba(7, 80, 63, 0.22);
+  width: 1px;
+  height: 85%;
+  align-self: center;
+}
+
+@media (max-width: 850px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .divider {
+    display: none;
+  }
+  .column {
+    padding: 0;
+    border-bottom: 1px solid rgba(7, 80, 63, 0.2);
+    padding-bottom: 40px;
+  }
+  .column:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}

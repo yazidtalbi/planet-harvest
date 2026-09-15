@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1100" viewBox="0 0 800 1100">
+<defs><linearGradient id="bg" x2="0" y2="1"><stop stop-color="#e2d9c9"/><stop offset="1" stop-color="#b3b19a"/></linearGradient><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#9baf95"/><stop offset="1" stop-color="#466f57"/></linearGradient></defs>
+<path fill="url(#bg)" d="M0 0h800v1100H0z"/>
+<ellipse cx="400" cy="1120" rx="410" ry="650" fill="#faf1d6" opacity=".3"/>
+<path d="M208 739l21-343c-2-137 47-219 171-219s173 82 171 219l21 343z" fill="#a5a688"/>
+<path d="M344 490h112v169H344z" fill="#cbd2b9"/>
+<ellipse cx="400" cy="375" rx="119" ry="171" fill="#e2e1c9"/>
+<path d="M261 412c-37-147 10-245 139-245 133 0 178 113 136 261-1-122-56-129-103-204-32 74-92 97-172 188z" fill="#a5a688"/>
+<path d="M76 1100l33-280c12-103 101-179 235-212l56 34 56-34c134 33 223 109 235 212l33 280z" fill="url(#coat)"/>
+<path d="M344 608l56 34 56-34-56 270z" fill="#f1edda"/>
+<path d="M229 420l37-81c-9 134 9 262 75 350-103-15-133-112-112-269zM571 420l-36-82c11 148-8 263-76 351 106-9 136-111 112-269z" fill="#a5a688"/>
+</svg>

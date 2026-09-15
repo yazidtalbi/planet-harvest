@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { ArrowIcon } from '@/components/EditorialPage';
 import styles from './harvest-sections.module.css';
 
 const pillars = [
   { id: 'sustainable-sourcing', title: 'Sustainable Sourcing', imageSrc: '/6.png', imageAlt: 'Farmers in the field', copy: 'We work with food companies, food service, and retailers to incorporate sustainably sourced produce into new and existing products.', speed: 0.16 },
   { id: 'food-boxes', title: 'Food Boxes', imageSrc: '/7.png', imageAlt: 'Fresh food boxes', copy: 'We design and deliver curated food boxes in partnership with healthcare providers, corporate employers, insurers & nonprofit organizations.', speed: 0.34 },
-  { id: 'product-integration', title: 'Product Integration', imageSrc: '/8.png', imageAlt: 'Harvesting fresh produce', copy: 'We work with food companies, food service, and retailers to incorporate sustainably sourced produce into new and existing products.', speed: 0.24 },
+  { id: 'product-integration', title: 'Product Integration', imageSrc: '/8.png', imageAlt: 'Harvesting fresh produce', copy: 'We partner with food companies and retailers to create co-branded, private label or Planet Harvest branded products.', speed: 0.24 },
 ];
 
 export default function HarvestSections() {
@@ -135,11 +136,11 @@ export default function HarvestSections() {
       </section>
 
       <section className={styles.vision} id="our-impact" aria-labelledby="vision-title">
-        {/* 4. Separator Graphic (4-tractor-separator.png) - Slowed down reveal */}
-        <div className={`${styles.fieldMark} ${styles.revealScale} ${styles.revealSlow}`} aria-hidden="true">
-          <img src="/4-tractor-separator.png" alt="" className={styles.separatorImage} />
+        {/* 4. Tractor Separator Image */}
+        <div className={`${styles.fieldMark} ${styles.revealOnScroll}`}>
+          <img src="/4-tractor-separator.png" alt="Tractor separator graphic" className={styles.separatorImage} />
         </div>
-        
+
         {/* Long term goal text - Slowed down reveal */}
         <h2 id="vision-title" className={`${styles.revealOnScroll} ${styles.revealSlow}`}>Our long term goal is to create<br className={styles.desktopBreak} /> a whole harvest marketplace that aligns farmers supply with real time demand across food &amp; retail sectors, while driving increased revenue back to the farm.</h2>
         
@@ -158,7 +159,7 @@ export default function HarvestSections() {
               <div className={styles.cardImageWrapper}>
                 <img src={pillar.imageSrc} alt={pillar.imageAlt} className={styles.cardImage} />
               </div>
-              <h3>{pillar.title}</h3>
+              <h3><a href={pillar.id === 'sustainable-sourcing' ? '/sourcing' : pillar.id === 'product-integration' ? '/products' : '/food-boxes'}>{pillar.title} <ArrowIcon /></a></h3>
               <p>{pillar.copy}</p>
             </article>
           ))}
@@ -168,30 +169,9 @@ export default function HarvestSections() {
       {/* 9. Callout Section Background (9.png) */}
       <section className={`${styles.callout} ${styles.revealScale}`} aria-labelledby="callout-title">
         <h2 id="callout-title">We source the whole harvest and connect all grades of produce from farmers to communities.</h2>
-        <a className={styles.button} href="#whole-harvest">Learn more <span aria-hidden="true">↗</span></a>
+        <a className={styles.button} href="/sourcing">Learn more <ArrowIcon /></a>
       </section>
 
-      <footer className={styles.siteFooter} id="connect">
-        {/* Broccoli sticker on top right with high z-index */}
-        <div className={`${styles.footerStickerTopRight} ${styles.revealScale}`}>
-          <img src="/10-sticker-footer.png" alt="Broccoli Sticker" className={styles.footerSticker} />
-        </div>
-
-        {/* Centered navigation links */}
-        <nav className={`${styles.footerNav} ${styles.revealOnScroll}`} aria-label="Planet Harvest footer">
-          <div><span>Company</span><a href="#our-story">Our story</a><a href="#whole-harvest">Our approach</a></div>
-          <div><span>What we do</span><a href="#sustainable-sourcing">Sustainable sourcing</a><a href="#product-integration">Product integration</a><a href="#food-boxes">Food boxes</a></div>
-          <div><span>Impact</span><a href="#our-impact">Farm to community</a><a href="#our-impact">Our impact</a></div>
-          <div><span>Connect</span><p>Let’s build a partnership</p><a className={styles.footerButton} href="#our-story">Learn more ↗</a></div>
-        </nav>
-        
-        {/* Footer logo SVG (logo1.svg) replacing big text wordmark */}
-        <a href="#" className={`${styles.footerLogoLink} ${styles.revealScale}`} aria-label="Planet Harvest, back to top">
-          <img src="/logo/logo1.svg" alt="Planet Harvest" className={styles.footerLogoSvg} />
-        </a>
-
-        <div className={styles.footerBottom}><span>From farms to communities.</span><span>© {new Date().getFullYear()} Planet Harvest, LLC</span><a href="#">Back to top ↑</a></div>
-      </footer>
     </div>
   );
 }

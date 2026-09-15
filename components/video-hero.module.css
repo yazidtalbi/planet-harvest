@@ -1,0 +1,20 @@
+.hero { position: relative; isolation: isolate; width: 100%; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; background: #163e2b center/cover no-repeat; color: #fffdf4; overflow: hidden; }
+.video, .shade { position: absolute; inset: 0; height: 100%; width: 100%; }
+.video { object-fit: cover; z-index: -2; }
+.shade { z-index: -1; background: linear-gradient(180deg,#021b1660 0%,#061e1730 30%,#05191040 55%,#031b15b8 100%); }
+.heading { padding: 165px 5vw 190px; text-align: center; }
+.eyebrow { display: block; font: 11px var(--font-sans), sans-serif; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 30px; }
+.hero .title { font-family: 'Biblon ITC', Georgia, serif; font-weight: 700; font-size: clamp(76px, 10.2vw, 174px); line-height: .94; letter-spacing: -.05em; color: #fffdf4; max-width: 1300px; margin: 0 auto; text-wrap: balance; }
+.bottom { position: absolute; left: 5vw; right: 5vw; bottom: 66px; display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
+.hero .copy { max-width: 430px; color: #fffdf4; font: 15px/1.5 var(--font-sans), sans-serif; }
+.actions { display: flex; align-items: center; gap: 16px; }
+.actions a { background: #f4e16d; color: #123c2c; white-space: nowrap; }
+.actions a:hover { background: #fff0a3; }
+.playback { flex-shrink: 0; border: 1px solid #ffffff80; color: #fffdf4; width: 44px; height: 44px; border-radius: 50%; font-size: 18px; display: grid; place-items: center; background: #032f2326; }
+.scroll { position: absolute; left: 50%; bottom: 25px; transform: translateX(-50%); font: 10px var(--font-sans), sans-serif; letter-spacing: .06em; display: flex; gap: 14px; align-items: center; }
+.hero :global(.site-reveal) { opacity: 1; transform: none; filter: none; }
+@media(min-width:1600px) { .hero .title { max-width: 1500px; } }
+@media(max-width:700px) { .heading { padding: 150px 22px 270px; } .hero .title { font-size: clamp(48px, 15vw, 88px); line-height: .98; } .eyebrow { font-size: 9px; margin-bottom: 28px; letter-spacing: .13em; } .bottom { left: 24px; right: 24px; bottom: 65px; flex-direction: column; align-items: flex-start; gap: 24px; } .hero .copy { font-size: 13px; max-width: 360px; } .actions { width: 100%; justify-content: space-between; } .actions a { font-size: 12px; padding: 12px 20px; } .scroll { font-size: 9px; bottom: 22px; } }
+@media(max-height:600px) and (min-width:701px) { .hero { min-height: 680px; } }
+
+@media(max-width:700px) { .hero[data-film="food"] { background-position: 30% center; } .hero[data-film="food"] .video { object-position: 30% center; } }

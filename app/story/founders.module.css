@@ -1,0 +1,97 @@
+.section {
+  --founder-progress: 0;
+  --founder-fuse: 0;
+  --leadership-reveal: 0;
+  position: relative;
+  min-height: 270svh;
+  padding: 0 20px;
+  margin: 0 0 65px;
+  background: transparent;
+  color: #073e30;
+}
+.stickyStage { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.founderGrid { width: 100%; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; position: relative; z-index: 1; }
+.leftFounder, .rightFounder { min-width: 0; opacity: calc(1 - var(--leadership-reveal)); will-change: transform, opacity; }
+.leftFounder { transform: translate3d(calc(var(--founder-fuse) * 101%), 0, 0) scale(calc(1 - var(--founder-fuse) * .08)); }
+.rightFounder { transform: translate3d(calc(var(--founder-fuse) * -101%), 0, 0) scale(calc(1 - var(--founder-fuse) * .08)); }
+.portraitCard { position: relative; display: block; min-width: 0; width: 100%; min-height: 640px; height: min(78vw, 780px); max-height: 90svh; overflow: hidden; border-radius: 8px; color: #fffdf0; text-align: center; isolation: isolate; }
+.portraitCard .portrait { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; transition: transform .65s cubic-bezier(.2,.7,.2,1); }
+.cardShade { position: absolute; inset: 0; background: linear-gradient(180deg,#05271e10 20%,#05271e35 55%,#05271ea8); }
+.founderName { position: absolute; top: 48%; left: 7%; right: 7%; transform: translateY(-50%); font: 700 clamp(32px,3.3vw,58px)/1 'Biblon ITC', Georgia, serif; letter-spacing: -.045em; text-wrap: balance; }
+.cardBottom { position: absolute; bottom: 32px; left: 20px; right: 20px; display: flex; align-items: center; justify-content: center; text-align: center; z-index: 3; }
+.founderRole { text-transform: uppercase; letter-spacing: .12em; font: 600 clamp(13px, 1.2vw, 16px)/1.5 var(--font-sans), sans-serif; color: #fffdf0; text-align: center; }
+.openIcon { position: absolute; top: 24px; right: 24px; width: 42px; height: 42px; border: 1px solid #fffdf066; border-radius: 50%; display: grid; place-items: center; font-size: 20px; transition: background .2s, color .2s; z-index: 3; }
+.readBio { position: absolute; left: 0; right: 0; top: 68%; font-size: 12px; opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; }
+.portraitCard:hover .portrait, .portraitCard:focus-visible .portrait { transform: scale(1.035); }
+.portraitCard:hover .readBio, .portraitCard:focus-visible .readBio { opacity: 1; transform: none; }
+.portraitCard:hover .openIcon { background: #f4df66; color: #073e30; }
+.statement { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 0; padding: 32px clamp(15px,2.2vw,42px); opacity: calc(1 - var(--founder-fuse)); transform: translateY(calc(var(--founder-fuse) * -30px)); }
+.eyebrow { display: block; text-transform: uppercase; letter-spacing: .15em; font: 10px/1.6 var(--font-sans), sans-serif; }
+.statementCopy { margin: auto 0; display: flex; flex-direction: column; align-items: center; }
+.statement h2 { color: #073e30; font: 700 clamp(25px,2.3vw,40px)/1.08 'Biblon ITC', Georgia, serif; letter-spacing: -.035em; margin: 20px 0 0; }
+.statement h2:global(.site-reveal) { opacity: 1; transform: none; filter: none; }
+.statement p { color: #354c3f; font: 12px/1.52 var(--font-sans), sans-serif; max-width: 350px; margin: 0 auto 15px; }
+.statement p:last-child { margin-bottom: 0; }
+.fruitIcon { display: block; width: 44px; height: auto; color: #073e30; margin: 0 auto 10px; transition: transform .3s ease; }
+.fruitIcon:hover { transform: scale(1.1); }
+.diamond { display: block; font: 15px var(--font-sans), sans-serif; color: #e8cc5d; }
+.section .portrait:global(.site-reveal) { opacity: 1; filter: none; }
+.leadershipReveal { position: absolute; inset: clamp(18px,3vw,48px); z-index: 2; margin: 0; overflow: hidden; border-radius: 10px; background: #8ba18c; opacity: var(--leadership-reveal); transform: scale(calc(.76 + var(--leadership-reveal) * .24)); pointer-events: none; will-change: transform, opacity; }
+.leadershipReveal img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 42%; }
+.leadershipReveal::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, #032f2399 100%); }
+.leadershipCaption { position: absolute; z-index: 1; inset: auto 20px 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fffdf0; }
+.leadershipCaption span { text-transform: uppercase; letter-spacing: .2em; font: 600 clamp(12px, 1.3vw, 16px) var(--font-sans), sans-serif; margin-bottom: 8px; opacity: .95; }
+.leadershipCaption strong { font: 700 clamp(64px, 11vw, 160px)/.85 'Biblon ITC', Georgia, serif; letter-spacing: -.04em; text-align: center; }
+.dialog { position: fixed; inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; border: 0; margin: 0; padding: 0; background: #e8e7d8; color: #073e30; overflow-y: auto; overscroll-behavior: contain; }
+.dialog::backdrop { background: #073e30aa; }
+.dialog[open] { animation: profile-enter .35s ease both; }
+.close { position: fixed; z-index: 2; top: 22px; right: 25px; width: 48px; height: 48px; border-radius: 50%; background: #e8e7d8ee; color: #073e30; font: 36px/1 var(--font-sans), sans-serif; display: grid; place-items: center; }
+.close:hover { background: #f4df66; }
+.profileLayout { display: grid; grid-template-columns: 47% 53%; min-height: 100%; }
+.profileImage { position: sticky; top: 0; height: 100dvh; overflow: hidden; background: #bdc7b4; }
+.profileImage img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.profileCopy { padding: 100px clamp(40px,6vw,110px) 85px; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.profileCopy h2 { font: 700 clamp(40px,4.5vw,74px)/1 'Biblon ITC', Georgia, serif; letter-spacing: -.04em; color: #073e30; max-width: 600px; margin: 30px auto 20px; text-wrap: balance; }
+.profileCopy .fruitIcon { color: #8c7934; margin: 0 auto 28px; }
+.profileCopy .profileRole { text-transform: uppercase; letter-spacing: .12em; font: 11px/1.6 var(--font-sans), sans-serif; color: #073e30; margin-bottom: 48px; }
+.biography { max-width: 510px; text-align: left; }
+.biography p { font: 15px/1.65 var(--font-sans), sans-serif; color: #354c3f; margin-bottom: 20px; }
+.biography p:last-child { margin-bottom: 0; }
+@keyframes profile-enter { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@media(max-width:1050px) { .founderGrid { grid-template-columns: 1fr .9fr 1fr; gap: 12px; } .portraitCard { min-height: 530px; } .founderName { font-size: 34px; } .statement { padding: 24px 14px; } .statement h2 { font-size: 27px; } .statement p { font-size: 11px; } .profileCopy { padding: 100px 35px 65px; } }
+@media(max-width:700px) {
+  .section { min-height: 300svh; padding: 0 12px; margin-bottom: 40px; }
+  .stickyStage { padding: 70px 0 18px; align-items: stretch; }
+  .founderGrid { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(220px, .8fr) 1fr; gap: 10px; }
+  .statement { grid-column: 1 / -1; grid-row: 1; min-height: 0; padding: 14px 18px; }
+  .statement .eyebrow { display: none; }
+  .statement h2 { font-size: 24px; margin: 10px 0 13px; }
+  .statement p { font-size: 10px; line-height: 1.4; margin-bottom: 8px; max-width: 340px; }
+  .leftFounder { grid-column: 1; grid-row: 2; transform: translate3d(calc(var(--founder-fuse) * 51%), 0, 0) scale(calc(1 - var(--founder-fuse) * .05)); }
+  .rightFounder { grid-column: 2; grid-row: 2; transform: translate3d(calc(var(--founder-fuse) * -51%), 0, 0) scale(calc(1 - var(--founder-fuse) * .05)); }
+  .portraitCard { height: 100%; min-height: 0; max-height: none; }
+  .founderName { font-size: clamp(22px,7vw,36px); top: 50%; }
+  .cardBottom { left: 12px; right: 12px; bottom: 14px; }
+  .founderRole { font-size: 10px; }
+  .openIcon { width: 32px; height: 32px; font-size: 15px; top: 14px; right: 14px; }
+  .readBio { display: none; }
+  .leadershipReveal { inset: 70px 12px 18px; }
+  .leadershipCaption { left: 20px; right: 20px; bottom: 22px; }
+  .leadershipCaption strong { font-size: 48px; }
+  .profileLayout { grid-template-columns: 1fr; }
+  .profileImage { position: relative; height: 55svh; min-height: 320px; }
+  .profileImage img { object-position: center 25%; }
+  .profileCopy { padding: 55px 28px 65px; }
+  .profileCopy h2 { font-size: 46px; }
+  .profileCopy .profileRole { margin-bottom: 32px; }
+  .close { top: 14px; right: 14px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .section { min-height: auto; padding-top: 20px; }
+  .stickyStage { position: relative; height: auto; overflow: visible; display: block; }
+  .leftFounder, .rightFounder, .statement { transform: none; opacity: 1; }
+  .leadershipReveal { position: relative; inset: auto; height: 80svh; min-height: 520px; margin-top: 18px; opacity: 1; transform: none; }
+  .dialog[open] { animation: none; }
+  .portraitCard .portrait, .readBio { transition: none; }
+  .portraitCard:hover .portrait, .portraitCard:focus-visible .portrait { transform: none; }
+}
